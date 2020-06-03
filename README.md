@@ -27,7 +27,41 @@ Download and install:
 *	Apache Cassandra 2.2.0
 *	Intellij Idea IDE (Install Scala plugin)
 ## Data Flow in Architecure:
-<img src="images/image.PNG"/>
+<p align="center"><img src="images/image.PNG"/></p>
+
+The above figure represents the data flow in the architecture,
+* The flight delay data records are produced to Kafka. 
+* Here, Spark acts as a Kafka consumer, consumes data from Kafka.
+* Spark send the data to speed/streaming layer for real-time computing and along with that spark also saves the data with some additional information like Kafka topic name, Kafka partition number, Kafka offsets values in HDFS. This addtional information saved in the HDFS will be helpful for us to prevent the data loss at failure times.(The reverse arrows in red color represents that when we restart the application after repair/failure, Spark should retrieve the data from Kafka from where it had left).
+* The saved flight delay data records in HDFS will be sent to batch layer for batch computations.
+* After the processing in both layers, both batch and real-time views are saved in Cassandra (Serving layer).
+
+I trained a classificaton model in batch layer on the data coming from HDFS and saved it on the disk. I loaded that trained model in the speed layer to serve the real-time flight delay predictions based on the input(features) coming from the Web UI.
+
+And I also created a variable/feature called carriers_per_day in both batch and speed layer, saved the variable's batch and real-time views in Cassandra. We can use this variable as a feature in our model training if we want.
+<p align="center"><img src="images/Web-ui.PNG"/></p>
+
+The above figure represents the data flow from Web UI(Which I created) to the loaded model in speed layer and back to the Web UI,
+* The input given in Web UI will be sent to Kafka.
+* From Kafka the input in sent to the loaded model in speed layer.
+* Model in the speed layer takes the input, predict the arrival delay of flight and save it in the Cassandra.
+* From Cassandra, Web-UI get the prediction and display it.
+### Input and Output:
+Input: Departure Delay (in mins), Carrier, Flight Date, Origin, Destination, Route, Arrival Time (mins), Departure Time (mins).
+
+Output: “Early (15+ Minutes Early)”
+						OR
+		    “Slightly Early (0-15 Minutes Early)”
+						OR
+		    “Slightly Late (0-30 Minutes Delay)”
+						OR
+		    “Very Late (30+ Minutes Delay)”
+
+        
+#### Example: 
+Input: Departure Delay: 10, Flight Date: 2017-01-17, Origin: ATL, Destination: SFO, Route: ATL-SFO, Arrival Time: 1090 (18:10 => 18 multiplied 60 + 10 = 1090), Departure Time: 930
+
+Expected Output: Slightly Late (0-30 Minutes Delay)
 
 ## Content:
 ```
@@ -57,7 +91,7 @@ Download and install:
            |__ pom.xml: Listed all required dependencies for module here. 
 *|__ Cassandra: Code for creating cassandra tables.
 *|__ README.md: Detailed description of the project.
-*|__ data.csv: Flight Delay data.
+*|__ data.csv: January 2015's flight Delay data of USA.
 *|__ lambda.iml: Created by Intellij IDE.
 *|__ pom.xml: Listed all required dependencies for whole project here.
 ```
