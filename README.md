@@ -49,7 +49,7 @@ Data is present in data.csv,
 The above figure represents the data flow in the architecture,
 * The flight delay data records are produced to Kafka. 
 * Here, Spark acts as a Kafka consumer, consumes data from Kafka.
-* Spark send the data to speed/streaming layer for real-time computing and along with that spark also saves the data with some additional information like Kafka topic name, Kafka partition number, Kafka offsets values in HDFS. This addtional information saved in the HDFS will be helpful for us to prevent the data loss at failure times.(The reverse arrows in red color represents that when we restart the application after repair/failure, Spark should retrieve the data from Kafka from where it had left).
+* Spark send the data to speed/streaming layer for real-time computing and along with that spark also saves the data with some additional information like Kafka topic name, Kafka partition number, Kafka offsets values in HDFS. This addtional information saved in the HDFS will be helpful for us to prevent the data loss at failure times.(The reverse arrows in red color represents that when we restart the application after repair/failure, Spark gets the Kafka topic name, Kafka partition number, Kafka offset values from HDFS, and will retrieve the data from Kafka from where it had left earlier).
 * The saved flight delay data records in HDFS will be sent to batch layer for batch computations.
 * After the processing in both layers, both batch and real-time views are saved in Cassandra (Serving layer).
 
