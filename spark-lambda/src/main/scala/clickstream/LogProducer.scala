@@ -23,7 +23,7 @@ object LogProducer extends App {
   val kafkaProducer: Producer[Nothing, String] = new KafkaProducer[Nothing, String](props)
   println(kafkaProducer.partitionsFor(topic))
 
-  val filename = "C:\\Users\\Veda\\Downloads\\data.csv"
+  val filename = "C:\\Users\\Veda\\Downloads\\data.csv"   // give path for the dataset
   for (line <- Source.fromFile(filename).getLines()) {
     val words = line.split(",")
     val output = words(0)+"\t"+words(1)+"\t"+words(2)+"\t"+words(3)+"\t"+words(4)+"\t"+words(5)+"\t"+words(6)+"\t"+words(7)+"\t"+words(8)+"\t"+words(9)+"\t"+words(10)+"\t"+words(11)+"\t"+words(12)+"\t"+words(13)+"\t"+words(14)+"\n"
