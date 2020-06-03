@@ -1,5 +1,5 @@
 # Lambda-Architecture-ML
-In this project, using lambda architecture, I trained a classifier model in batch layer and loaded the trained model to serve the real-time flight arrival delay predictions. 
+In this project, using lambda architecture, I trained a classifier model in batch layer and loaded the trained model in speed/streaming layer to serve the real-time flight arrival delay predictions. 
 * Author : Kolli Nethre Sai
 ## What is Lambda Architecture?
 Lambda architecture is a data processing architecture designed to handle massive quantities of data by taking advantage of both batch and stream processing methods. There are three layers in this architecture:
