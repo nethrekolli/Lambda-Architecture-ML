@@ -28,6 +28,7 @@ Download and install:
 *	Intellij Idea IDE (Install Scala plugin)
 ## Data Flow in Architecure:
 <img src="images/image.PNG"/>
+
 ## Content:
 ```
 *|__ .idea: Created by Intellij IDE.
