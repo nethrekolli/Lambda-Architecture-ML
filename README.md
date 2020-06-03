@@ -73,8 +73,6 @@ Output: “Early (15+ Minutes Early)”
 		    “Slightly Late (0-30 Minutes Delay)”
 						OR
 		    “Very Late (30+ Minutes Delay)”
-
-        
 #### Example: 
 Input: Departure Delay: 10, Flight Date: 2017-01-17, Origin: ATL, Destination: SFO, Route: ATL-SFO, Arrival Time: 1090 (18:10 => 18 multiplied 60 + 10 = 1090), Departure Time: 930
 
@@ -115,12 +113,17 @@ Expected Output: Slightly Late (0-30 Minutes Delay)
 ## Run:
 1.	Clone the project into the local system: ```$ git clone git@github.com:nethrekolli/Lambda-Architecture-ML-flightdelay```
 2.	Import the project into Intellij IDE.
-3.	Create two files referrers.csv and products.csv in lambda/spark-lambda/src/main/resources directory. Add some data into it, so that we can use these two files to generate ‘product’ field and ‘referrers’ field values in the clickstream data.
-4.	Run Hadoop, Apache Spark and Apache Cassandra.
-5.	Create tables in Cassandra to save the batch views and real-time views. Code for that is in “Cassandra” file.
-6.	Run “LogProducer.scala” which generates clickstream data and submits to Kafka.
-7.	Run “StreamingJob.scala” which takes data from Kafka, save it to HDFS, process the data saves the real-time views in Cassandra.
-8.	Run “BatchJob.scala” which takes data from HDFS, process the data and saves the batch views in Cassandra.
+3.	Run Hadoop, Apache Kafka and Apache Cassandra.
+4.	Create tables in Cassandra to save the batch views, real-time views of carriers_per_day variable and to save the prediction value. Code for that is in “Cassandra” file in repo.
+6.	Run “LogProducer.scala” which produces the flight delay data records to Kafka.
+7.	Run “StreamingJob.scala” which takes data from Kafka, save it to HDFS, create carriers_per_day variable save the real-time view in Cassandra.
+8.	Run “BatchJob.scala” which takes data from HDFS, create carriers_per_day variable save the batch view in Cassandra, and train a classifier model save it on the disk.
+9.	Run "StreamingJobforPredictions.scala" which takes the input data from Kafka, loads the trained model and predict the flight delay, save in Cassandra.
+10.	Install `virtualenv` package using `pip install virtualenv`.
+11.	Goto Web-UI directory, create Python Virtual Environment: ```virtualenv ENVIRONMENT_NAME```
+12.	Activate Python Virtual Environment: ```Windows : ENVIRONMENT_NAME\Scripts\activate```
+13.	Run predict_flask.py: ```python predict_flask.py```
+14.	Now open your browser, type "http://localhost:5000/flights/delays/predict_kafka" in the url and press enter. A webpage opens, give inputs as I told above in Example of Input and Output for Web-UI. A few seconds later, arrival delay of flight as an output will be displayed on the webpage. 
 ### Standards followed in the project. Here's a gist:
 | Literal | Naming Standard | 
 | :---         |     :---:      | 
