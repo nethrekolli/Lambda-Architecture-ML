@@ -26,6 +26,23 @@ Download and install:
 *	Apache Kafka 0.9.0.0
 *	Apache Cassandra 2.2.0
 *	Intellij Idea IDE (Install Scala plugin)
+## Data (January 2015's flight delay data of USA)
+Data is present in data.csv,
+* Column 1: Arrival Delay in mins
+* Column 2: Carrier name
+* Column 3: day_of_month
+* Column 4: day_of_week
+* Column 5: day_of_year
+* Column 6: Departure Delay in mins
+* Column 7: Destination
+* Column 8: Distance in miles
+* Column 9: Flight Date
+* Column 10: Origin
+* Column 11: Route
+* Column 12: Arrival Delay Bucketized (This column is bucketized feature of Arrival Delay)
+* Column 13: Arrival Time in mins (18:10 => 18 multiplied 60 + 10 = 1090)
+* Column 14: Departure Time in mins
+* Column 15: Flight Number
 ## Data Flow in Architecure:
 <p align="center"><img src="images/image.PNG"/></p>
 
@@ -46,7 +63,7 @@ The above figure represents the data flow from Web UI(Which I created) to the lo
 * From Kafka the input in sent to the loaded model in speed layer.
 * Model in the speed layer takes the input, predict the arrival delay of flight and save it in the Cassandra.
 * From Cassandra, Web-UI get the prediction and display it.
-### Input and Output:
+### Input and Output for Web-UI:
 Input: Departure Delay (in mins), Carrier, Flight Date, Origin, Destination, Route, Arrival Time (mins), Departure Time (mins).
 
 Output: “Early (15+ Minutes Early)”
