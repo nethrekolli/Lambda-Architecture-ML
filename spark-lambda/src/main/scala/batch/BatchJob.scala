@@ -25,7 +25,7 @@ object BatchJob {
     // initialize input RDD
     val inputDF = sqlContext.read.parquet("hdfs://localhost:9000/lambda/flightdelay-app1/")
 
-    /* inputDF.createOrReplaceTempView("flightdelay")
+    inputDF.createOrReplaceTempView("flightdelay")
     val carriersPerDay = sqlContext.sql(
       """SELECT route, flight_date, COUNT(DISTINCT carrier) as no_of_carriers
         |FROM flightdelay GROUP BY route, flight_date
@@ -35,7 +35,7 @@ object BatchJob {
       .write
       .format("org.apache.spark.sql.cassandra")
       .options(Map( "keyspace" -> "lambda", "table" -> "batch_carriers_per_day"))
-      .save() */
+      .save()
 
     val classifierdata = inputDF.selectExpr("cast(arr_delay_est as Double) label", "cast(day_of_month as Double) day_of_month", "cast(day_of_week as Double) day_of_week", "dep_delay", "cast(distance as Double) distance", "carrier", "origin", "dest", "route", "dep_time", "arr_time")
     classifierdata.printSchema()
@@ -66,7 +66,7 @@ object BatchJob {
 
     println(metrics.confusionMatrix)
 
-    model.write.overwrite().save("C:\\Users\\Veda\\Desktop\\models\\random_classifier_model")
+    model.write.overwrite().save("C:\\Users\\Veda\\Desktop\\models\\random_classifier_model")  // give path to save your model
 
   }
 }
