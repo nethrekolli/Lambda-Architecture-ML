@@ -29,7 +29,7 @@ object StreamingJobforPredictions {
         "auto.offset.reset" -> "largest"
       )
 
-      val pipelineModel = PipelineModel.load("C:\\Users\\Veda\\Desktop\\models\\random_classifier_model")
+      val pipelineModel = PipelineModel.load("C:\\Users\\Veda\\Desktop\\models\\random_classifier_model")  // give path to your saved model directory
 
       val KafkaDirectStreamforPrediction = KafkaUtils.createDirectStream[String, String, StringDecoder, StringDecoder](
         ssc, kafkaDirectParamsforWebRequest, Set(topic)
