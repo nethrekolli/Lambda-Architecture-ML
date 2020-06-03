@@ -22,7 +22,7 @@ object SparkUtils {
     if (isIDE) {
       System.setProperty("hadoop.home.dir", "F:\\project-work\\hadoop-2.7.2") // required for winutils
       conf.setMaster("local[*]")
-      checkpointDirectory = "file:///C:/temp"
+      checkpointDirectory = "file:///C:/temp"   // give path to the save checkpoint files
     } else {
       checkpointDirectory = "hdfs://localhost:9000/spark/checkpoint"
     }
