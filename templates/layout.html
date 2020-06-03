@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>FlightDelay</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/static/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/bootstrap-theme.min.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <script src="/static/jquery-1.12.2.min.js"></script>
+    <script src="/static/bootstrap.min.js"></script>
+    <script src="/static/d3.v3.min.js"></script>
+    <div id="wrap">
+
+      <!-- Begin page content -->
+      <div class="container">
+        <div class="page-header" style="margin: 0px;">
+          <h2>Flight Delay</h2>
+        </div>
+        {% block body %}{% endblock %}
+      </div>
+
+      <div id="push"></div>
+    </div>
+
+    <div id="footer">
+    </div>
+  </body>
+</html>
